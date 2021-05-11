@@ -8,6 +8,8 @@ class products(models.Model):
     cats=(
         ('bodyCare','Body care'),
         ('kitchen','Kitchen ware'),
+        ('electronic','Electronic'),
+        ('clothing','Clothing'),
     )
     Id=models.AutoField(primary_key=True)
     Name=models.CharField(max_length=100)
@@ -23,7 +25,7 @@ class products(models.Model):
         return self.Name  
 
 class category(models.Model):
-    Id=models.AutoField(primary_key=True,default="")
+    Id=models.AutoField(primary_key=True)
     cateName=models.CharField(max_length=100)
     displayName=models.CharField(max_length=100)
     cateImg=models.ImageField(default='') 

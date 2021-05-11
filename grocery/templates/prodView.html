@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+{%for i in pd%}
+<div class="container space">
+<div class="row">
+    <div class="col-4 my-4">
+        <img id="img"+{{i.Id}} src="/media/{{i.Img}}" alt="loading....">
+    </div>
+    <div class="col-8">
+        <div class="card specialcard">
+            <div id="nam"+{{i.Id}}><h4><b>{{i.Name}}</b></h4></div>
+            <div id="bra"+{{i.Id}}><h5>Brand:<b>{{i.Brand}}</b></h5></div>
+            <div id="pri"+{{i.Id}}><p><b>Rs.{{i.Prize}}</b></p></div>
+            <p><b>About this item:</b><br>
+            {{i.Desc}}
+            </p>
+                <div>
+                    <span><a id="pr{{i.Id}}" class="btn btn-primary Cart">Add to cart</a></span>
+                    <span><a class="btn btn-light">Wishlist</a></span>
+                </div>
+                
+        </div>
+    </div>
+</div>
+</div>
+{%endfor%}
+{% endblock %}
+{% block js %}
+<script>
+for(item in cart){
+    if(document.getElementById(item)!=null){
+    document.getElementById(item).innerText="Go to bag";
+  }}
+  $('.Cart').click(function(){
+    document.getElementById(this.id).innerText="Go to bag";
+    var idNo=this.id.slice(2);
+    var image=document.getElementById("img{{idNo}}").src;
+    image=image.split("/");
+    imageName=image[4];
+    var name=document.getElementById("nam{{idNo}}").innerText;
+    var brand=document.getElementById("bra{{idNo}}").innerText;
+    brand=brand.slice(6);
+    var price=document.getElementById("pri{{idNo}}").innerText;
+    price=price.slice(3);
+    cart[this.id]=[{'image':imageName ,'name':name ,'brand':brand ,'price':price},1];
+    localStorage.setItem('cart',JSON.stringify(cart));
+    document.getElementById(this.id).href="/cart";
+  });
+</script>
+{% endblock %}

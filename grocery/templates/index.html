@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<h3><b>Shop by categories:</b></h3>
+  {% for i in category %}
+        <div class="card col-3">
+            <img src="/media/{{i.cateImg}}" class="card-img-top cat_img" alt="Loading...">
+            <div class="card-body">
+              <h4 class="card-title">{{i.displayName}}</h4>
+              <a href="/products?cat={{i.cateName}}" class="btn btn-primary" value="{{i.cateName}}">Show product</a>
+            </div>
+          </div>
+  {% endfor %}
+
+      {% endblock %}

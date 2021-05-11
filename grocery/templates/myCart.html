@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block body %}
+<div id="cartBody" class="row mx-2 my-4">
+    
+</div>
+{% endblock %}
+{% block js %}
+<script>
+updateCart();
+for(product in cart){
+        var selectitem=cart[product][1]+product;
+        document.getElementById(selectitem).selected=true;
+}
+////////////////////////////////////////////////////////////////////
+function updateCart(){
+if (Object.keys(cart).length==0){
+    var str="<h3>you have no item in cart. Add something to proceed.</h3>";
+    document.getElementById("cartBody").innerHTML=str;
+}
+else{
+    var tPrice=0;
+    var str="<div class='col-8'>";
+        for (product in cart){
+        var image=cart[product][0]['image'];
+        var name=cart[product][0]['name'];
+        var brand=cart[product][0]['brand'];
+        var price=cart[product][0]['price'];
+        var n=cart[product][1];
+        console.log(n)
+        tPrice=tPrice+(price*cart[product][1]);
+        str=str+`<div id="c${product}" class='card col-10'><div class='row'><div class='col-4 my-4'><img src='/media/${image}' class='card-img alt='Loading...'></div><div class='col-8 my-4'><div class='card-body'><h4 class='card-title'>${name}</h4><h6 class='card-sub-title'>Brand:${brand}</h6><h5>Rs.${price}</h5>`
+        str=str+`<label>Qty:</label><select class="Qty" id="noi${product}"><option id="1${product}" value="1">1</option><option id="2${product}" value="2">2</option><option id="3${product}" value="3">3</option><option id="4${product}" value="4">4</option><option id="5${product}" value="5">5</option></select><span><button id="r${product}" class="mx-2 rmv btn-primary">Remove</button></span></div></div></div></div>`
+    }
+    str=str+`</div><div class='col-4 specialcard mh my-4'><b>Total=</b><span id='totalPrice'>${tPrice} Rs.</span><div><a href='/checkout' class='btn btn-primary my-3'>Proceed to pay</a></div></div>`;
+    document.getElementById("cartBody").innerHTML=str;
+}}
+
+function updatePrice(){
+    var totalprice=0;
+    for (product in cart){
+        var price=cart[product][0]['price'];
+        totalprice=totalprice+(price*cart[product][1]);
+    }
+    if (totalprice==0){
+        var str="<h3>you have no item in cart. Add something to proceed.</h3>";
+        document.getElementById("cartBody").innerHTML=str;
+    }
+    else{
+    document.getElementById("totalPrice").innerText=totalprice+"Rs.";
+    }   
+}
+
+$(".Qty").on('change',function(){
+    var quantity=document.getElementById(this.id).value;
+    var id=(this.id).slice(3);
+    cart[id][1]=parseInt(quantity);
+    updatePrice();
+    localStorage.setItem('cart',JSON.stringify(cart));
+});
+
+
+$(".rmv").on('click',function(){
+    console.log(this.id);
+    var pid=(this.id).slice(1);
+    var itemId="c"+pid;
+    document.getElementById(itemId).hidden=true;
+    delete cart[pid];
+    localStorage.setItem('cart',JSON.stringify(cart));
+    updatePrice();
+});
+</script>
+{% endblock %}

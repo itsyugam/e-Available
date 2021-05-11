@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block body %}
+    <h2><b>Add Information and Place your order:</b></h2>
+
+    <form method="post" action="/checkout/">{% csrf_token %}
+        <input type="text" class="form-control" id="cart" name="cart" hidden>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+              </div>
+          <div class="form-group col-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input type="text" class="form-control" id="add1" name="add1" placeholder="1234 Main St" required>
+        </div>
+        <div class="form-group">
+          <label for="inputAddress2">Address 2</label>
+          <input type="text" class="form-control" id="add2" name="add2" placeholder="Apartment, studio, or floor" required>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="City">City</label>
+            <input type="text" class="form-control" id="city" name="city" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <input type="text" class="form-control" id="state" name="state" required>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputZip">Pin</label>
+            <input type="text" class="form-control" id="pincode" name="pincode" required>
+          </div>
+          <div class="form-group">
+            <label for="inputphone">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone no." required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary my-3">place order</button>
+      </form>
+{% endblock %}
+{% block js %}
+<script>
+    document.getElementById("cart").value=JSON.stringify(cart);
+    var value={{placed}};
+    if(value==1) {
+      alert("Your order is placed and it will reach you within 10 days.");
+      localStorage.clear()
+      document.location="/";
+
+    }
+</script>
+{% endblock %}

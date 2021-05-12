@@ -4,10 +4,10 @@
 {%for i in pd%}
 <div class="container space">
 <div class="row">
-    <div class="col-4 my-4">
+    <div class="col-sm-10 col-lg-4">
         <img id="img"+{{i.Id}} src="/media/{{i.Img}}" alt="loading....">
     </div>
-    <div class="col-8">
+    <div class="col-sm-10 col-lg-8">
         <div class="card specialcard">
             <div id="nam"+{{i.Id}}><h4><b>{{i.Name}}</b></h4></div>
             <div id="bra"+{{i.Id}}><h5>Brand:<b>{{i.Brand}}</b></h5></div>

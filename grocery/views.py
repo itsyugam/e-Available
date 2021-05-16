@@ -3,19 +3,24 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import products,category,orders
+from .models import products,category,orders,store
 import pandas
 import json
 
 # Create your views here.
 def index(requests):
+   s=store.objects.all()
    c=category.objects.all()
-   params={'category':c}
+   params={'category':c,'store':s}
    return render(requests,'index.html',params)
 
-def allproducts(requests):
-   categ=requests.GET.get("cat","")
-   prod_list=products.objects.filter(Cate=categ)
+def productsByStore(requests,StoreName):
+   prod_list=products.objects.filter(Store=StoreName)
+   params={'product':prod_list}
+   return render(requests,'allproducts.html',params)
+
+def productsByCat(requests,Categ):
+   prod_list=products.objects.filter(Cate=Categ)
    params={'product':prod_list}
    return render(requests,'allproducts.html',params)
 
@@ -39,8 +44,8 @@ def checkout(requests):
       pincode=requests.POST.get("pincode")
       phone=requests.POST.get("phone")
       print(cart,name,email,address,state,city,pincode,phone)
-   #    obj=orders(ordName=name,ItemDetail=cart,Email=email,Address=address,City=city,State=state,Pincode=pincode,Phone=phone)
-   #    obj.save()
+      obj=orders(ordName=name,ItemDetail=cart,Email=email,Address=address,City=city,State=state,Pincode=pincode,Phone=phone)
+      obj.save()
       placed=1
       return render(requests, 'checkout.html',{"placed":placed})
    return render(requests, 'checkout.html',{"placed":placed})

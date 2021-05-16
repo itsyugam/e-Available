@@ -23,7 +23,8 @@ from grocery import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
-    path('products/' , views.allproducts, name='products'),
+    path('productByCat/<str:Categ>' , views.productsByCat, name='productByCat'),
+    path('productByStore/<str:StoreName>' , views.productsByStore, name='productByStore'),
     path('productView/<int:id>' , views.prodView, name='productView'),
     path('cart/', views.cart, name='myCart'),
     path('checkout/' , views.checkout, name='checkout'),

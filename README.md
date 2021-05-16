@@ -8,7 +8,7 @@ It's an online shopping web application like Flipkart and Amazone.This applicati
 
 ## Modules with their screenshots:
 ### Home Page
-This is very first page when you visit my web app, where various categories will be appear to find your products. 
+This is very first page when you visit my web app, where various Stores(registered with our app) and categories will be appear to find your products. 
 <img src="screenshots/Capture.PNG">
 ### Product page
 After opening any category you will switch to this page where all the product of respective category will be appear.
